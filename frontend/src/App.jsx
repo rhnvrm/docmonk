@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import docmonkLogo from './assets/docmonk.png'
-import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
