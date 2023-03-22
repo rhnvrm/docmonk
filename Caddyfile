@@ -1,5 +1,6 @@
 # Reverse proxy to frontend and backend for local development.
-:8080 {
-    reverse_proxy / localhost:5173 
-    reverse_proxy /api localhost:1323 
+http://localhost:8080 {
+    file_server
+    reverse_proxy /api api:1323 
+    reverse_proxy /* front:5173 
 }

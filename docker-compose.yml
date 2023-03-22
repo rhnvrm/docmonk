@@ -1,0 +1,39 @@
+version: "3.8"
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./:/app
+    depends_on:
+      - db
+
+  front:
+    image: node
+    volumes:
+      - ./frontend:/app
+    working_dir: /app
+    command: npm run dev
+
+  caddy:
+    image: caddy
+    ports:
+      - "8080:8080"
+    volumes:
+      - $PWD/Caddyfile:/etc/caddy/Caddyfile
+    depends_on:
+      - api
+      - front
+
+  db:
+    image: postgres:14
+    volumes:
+      - db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: user
+      POSTGRES_DB: db
+
+volumes:
+  db:
